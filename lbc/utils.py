@@ -4,16 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import json
 from pathlib import Path
-import itertools
 import inspect
-import random
 from tqdm import tqdm
-from torcheval.metrics.functional import r2_score
-from sklearn.linear_model import LinearRegression
-import os
-
-from sklearn.metrics import r2_score as sk_r2_score
-import pprint
 from pathlib import Path
 
 sns.set_theme()
