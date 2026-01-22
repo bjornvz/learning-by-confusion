@@ -20,7 +20,7 @@ class XXZDataProcessor():
             # raise NotImplementedError("Classification not yet implemented for XXZ dataset.")
 
         self.grid_size = (300,1) 
-        directory = './data/simulated/XXZ_L/'
+        directory = './data/simulated/XXZ/'
         file_list = [os.path.join(directory, f) for f in os.listdir(directory)]
 
         # Loads files that start with 't=' and end with '.dat' in the specified directory

@@ -109,74 +109,10 @@ def plot_history(metrics, cf, file_name):
     plt.close()
 
 
-# def plot_history(metrics, cf, file_name):
-#     """"
-#     Plots losses and the bottleneck activations for each epoch.
-#     """
-#     metric1, metric2 = "train_loss", "train_l1"
-#     metric3, metric4 = "val_loss", "val_l1"
-#     metric5 = cf.goodness_str
-
-#     if cf.kernels is not None:
-#         z = np.array([ np.abs(np.mean(metrics[f'z_{i}'], axis=1)) for i in range(len(cf.kernels)) ]) # mean over the batch
-
-#     fig = plt.figure(figsize=(10, 10))
-#     gs = gridspec.GridSpec(4, 2, height_ratios=[1, 1, 1, 1])  # 4 rows, 2 columns
-
-#     # subplot 1: all the losses
-#     ax1 = fig.add_subplot(gs[0, 0])
-#     ax1.plot(metrics[metric1], label='train', color="red")
-#     ax1.plot(metrics[metric3], label='val', color="blue")
-#     ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-#     ax1.set_yscale("log")
-#     ax1.set_xlabel("epoch")
-#     ax1.set_ylabel("loss")
-#     ax1.set_title(fr"$\mathbf{{loss}}$, train= {metrics[metric1][-1]:.2e}, val={metrics[metric3][-1]:.2e}", loc='left')
-
-
-#     # subplot 3: acc/r2
-#     ax3 = fig.add_subplot(gs[1, 0])
-#     ax3.plot(metrics[f"val_"+metric5], label=metric5, color="blue")
-#     ax3.plot(metrics[f"train_"+metric5], label=f"train_{metric5}", color="red")
-#     ax3.set_xlabel("epoch")
-#     ax3.set_ylabel(cf.goodness_str)
-#     ax3.set_title(fr"$\mathbf{{{cf.goodness_str}}}$, train= {metrics[f'train_{metric5}'][-1]:.2f}, val={metrics[f'val_{metric5}'][-1]:.2f}", loc='left')
-#     lower_limit = 0 
-#     ax3.set_ylim(lower_limit, 1.01)
-
-
-#     phase_indicator = np.array(metrics["phase_indicator"])
-#     unique_labels = np.array(metrics["unique_labels"])
-#     peak_index = np.argmax(phase_indicator[-1])
-
-
-#     # subplot 5: phase indicator spanning two rows
-#     ax5 = fig.add_subplot(gs[2:, 0])  # Span rows 2 and 3, both columns
-#     sns.set_style("dark")
-#     cax = ax5.imshow(phase_indicator.T, aspect='auto', cmap='viridis', interpolation='nearest')
-#     cbar = fig.colorbar(cax, ax=ax5, orientation='horizontal', pad=0.2)
-#     cbar.set_label(cf.phase_indicator_str)
-#     ax5.set_ylabel(cf.label_param)
-#     ax5.grid(False)
-#     ax5.set_xlabel("epoch")
-#     ax5.set_title(f"phase indicator: {cf.phase_indicator_str}")
-#     ax5.axhline(y=peak_index, color='white', linestyle='--', label=f'max last epoch: {cf.label_param}={unique_labels[peak_index]:.2f}', linewidth=2) # type: ignore
-#     yticks = np.linspace(0, len(unique_labels) - 1, num=5, dtype=int)
-#     ax5.set_yticks(yticks)
-#     formatted_labels = [f"{label:.2f}" for label in unique_labels[yticks]]
-#     ax5.set_yticklabels(formatted_labels)
-#     ax5.invert_yaxis()
-#     ax5.legend(loc='upper right', fontsize=8)
-
-#     plt.tight_layout()
-#     save_fig(fig, cf.logdir, file_name)
-#     plt.close()
 
 
 
-
-
-def plot_lbc(all_metrics, cf, file_name, enabled_metrics=None):
+def plot_lbc(all_metrics, cf, file_name, enabled_metrics=None, show=False):
     """
     Plot Learning by Confusion (LBC) results aggregated over seeds.
     """
@@ -271,6 +207,8 @@ def plot_lbc(all_metrics, cf, file_name, enabled_metrics=None):
     fig.suptitle(rf"learning by confusion: {cf.dataset}, {len(cf.seeds)} seeds")
     plt.tight_layout()
     save_fig(fig, cf.logdir, file_name)
+    if show:
+        plt.show()
     plt.close()
 
 
